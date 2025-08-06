@@ -54,7 +54,7 @@ class WelcomeScreen extends StatelessWidget {
               // Único botón centrado
               Center(
                 child: SizedBox(
-                  width: 200, // ajusta ancho a tu gusto
+                  width: 200, // ajuste de ancho
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.accentRed,

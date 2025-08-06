@@ -67,7 +67,6 @@ class ActivityScreen extends StatelessWidget {
                 style: const TextStyle(fontSize: 14),
               ),
               onTap: () {
-                // Aquí podrías navegar a un detailScreen si lo creas
                 showDialog(
                   context: ctx,
                   builder: (_) => AlertDialog(

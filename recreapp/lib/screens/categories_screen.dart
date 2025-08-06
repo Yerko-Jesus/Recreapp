@@ -1,7 +1,7 @@
 // lib/screens/categories_screen.dart
 import 'package:flutter/material.dart';
 import '../theme.dart';
-import 'activity_screen.dart'; // ← Importa tu pantalla de actividades
+import 'activity
 
 class CategoriesScreen extends StatelessWidget {
   static const String routeName = '/categories';
