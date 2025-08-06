@@ -1,0 +1,44 @@
+name: recreapp
+description: Aplicación recreativa educativa para niños.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/lenguaje.png
+    - assets/images/matematicas.png
+    - assets/images/ciencias.png
+    - assets/images/cocina.png
+    - assets/images/pasatiempos.png
+    - assets/images/sopa_letras.png
+    - assets/images/cuentacuentos.png
+    - assets/images/bingo_numeros.png
+    - assets/images/sumas_fichas.png
+    - assets/images/semillas.png
+    - assets/images/laberinto_agua.png
+    - assets/images/limonada.png
+    - assets/images/batido.png
+    - assets/images/origami.png
+    - assets/images/pintura.png
+    - assets/images/illustracion_bienvenida.png
+
+fonts:
+  - family: Montserrat
+    fonts:
+      - asset: assets/fonts/Montserrat-Regular.ttf
+      - asset: assets/fonts/Montserrat-Bold.ttf
+        weight: 700
