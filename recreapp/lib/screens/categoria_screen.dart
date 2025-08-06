@@ -1,7 +1,6 @@
 // lib/screens/categoria_screen.dart
 
 import 'package:flutter/material.dart';
-import '../models/actividad.dart';
 import '../data/actividades_data.dart';
 
 class CategoriaScreen extends StatelessWidget {

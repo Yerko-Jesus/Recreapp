@@ -23,6 +23,26 @@ final List<Actividad> actividadesData = [
     instrucciones:
     'Cada niño saca una tarjeta y aporta una frase para construir un cuento colectivo.',
   ),
+  Actividad(
+    id: 'leng3',
+    titulo: 'Cuentacuentos',
+    descripcion: 'Inventa un cuento en conjunto a partir de tres palabras.',
+    categoria: 'Lenguaje',
+    imagen: 'assets/images/cuentacuentos.png',
+    materiales: ['Tarjetas con palabras'],
+    instrucciones:
+    'Cada niño saca una tarjeta y aporta una frase para construir un cuento colectivo.',
+  ),
+  Actividad(
+    id: 'leng4',
+    titulo: 'Cuentacuentos',
+    descripcion: 'Inventa un cuento en conjunto a partir de tres palabras.',
+    categoria: 'Lenguaje',
+    imagen: 'assets/images/cuentacuentos.png',
+    materiales: ['Tarjetas con palabras'],
+    instrucciones:
+    'Cada niño saca una tarjeta y aporta una frase para construir un cuento colectivo.',
+  ),
 
   Actividad(
     id: 'mate1',

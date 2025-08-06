@@ -1,7 +1,6 @@
 // lib/screens/activity_screen.dart
 import 'package:flutter/material.dart';
 import '../theme.dart';
-import '../models/actividad.dart';
 import '../data/actividades_data.dart';
 
 class ActivityScreen extends StatelessWidget {

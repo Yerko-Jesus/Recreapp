@@ -1,7 +1,9 @@
 // lib/screens/categories_screen.dart
 import 'package:flutter/material.dart';
 import '../theme.dart';
-import 'activity
+import 'activity_screen.dart';
+// si la estructura de carpetas lo requiere:
+// import '../screens/activity_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   static const String routeName = '/categories';
