@@ -16,10 +16,12 @@ import 'screens/register_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Inicializa Supabase con tus claves
   await Supabase.initialize(
     url: SupabaseKeys.supabaseUrl,
     anonKey: SupabaseKeys.supabaseAnonKey,
+    authOptions: const FlutterAuthClientOptions(
+      autoRefreshToken: true, // refresca tokens, la sesión se mantiene hasta cerrar
+    ),
   );
 
   runApp(const MyApp());
@@ -38,8 +40,8 @@ class MyApp extends StatelessWidget {
       routes: {
         WelcomeScreen.routeName: (_) => const WelcomeScreen(),
         CategoriesScreen.routeName: (_) => const CategoriesScreen(),
-        ActivityScreen.routeName: (_) => const ActivityScreen(),     // lista por categoría (recibe String)
-        ActividadScreen.routeName: (_) => const ActividadScreen(),   // detalle de actividad (recibe Actividad)
+        ActivityScreen.routeName: (_) => const ActivityScreen(),
+        ActividadScreen.routeName: (_) => const ActividadScreen(),
         FeedbackScreen.routeName: (_) => const FeedbackScreen(),
         LoginScreen.routeName: (_) => const LoginScreen(),
         RegisterScreen.routeName: (_) => const RegisterScreen(),

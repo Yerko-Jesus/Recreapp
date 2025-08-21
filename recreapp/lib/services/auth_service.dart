@@ -2,48 +2,52 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
-  final supabase = Supabase.instance.client;
+  final SupabaseClient _supabase = Supabase.instance.client;
 
-  String? get currentUserId => supabase.auth.currentUser?.id;
+  Future<void> signIn({
+    required String email,
+    required String password,
+  }) async {
+    await _supabase.auth.signInWithPassword(email: email, password: password);
+  }
 
-  Future<AuthResponse> signUp({
+  Future<void> signUp({
     required String email,
     required String password,
     required String fullName,
     required String role, // 'student' | 'teacher'
+    required DateTime dateOfBirth,
   }) async {
-    // Crea usuario (envía correo de confirmación si lo activaste en Supabase)
-    final res = await supabase.auth.signUp(email: email, password: password);
-
-    final userId = res.user?.id;
-    if (userId != null) {
-      // Guarda/actualiza perfil con nombre y rol
-      await supabase.from('profiles').upsert({
-        'id': userId,
+    // 1) Crear usuario de Auth (puedes guardar metadata si quieres)
+    final res = await _supabase.auth.signUp(
+      email: email,
+      password: password,
+      data: {
         'full_name': fullName,
         'role': role,
-      });
+        'date_of_birth': _fmt(dateOfBirth),
+      },
+    );
+
+    final user = res.user;
+    if (user == null) {
+      throw AuthException('No se pudo crear el usuario');
     }
-    return res;
+
+    // 2) Upsert en tabla 'users' (id = auth.users.id)
+    await _supabase.from('users').upsert({
+      'id': user.id,
+      'email': email,
+      'full_name': fullName,
+      'role': role,
+      'date_of_birth': _fmt(dateOfBirth),
+    });
   }
 
-  Future<AuthResponse> signIn({
-    required String email,
-    required String password,
-  }) {
-    return supabase.auth.signInWithPassword(email: email, password: password);
+  Future<void> signOut() async {
+    await _supabase.auth.signOut();
   }
 
-  Future<void> signOut() => supabase.auth.signOut();
-
-  Future<bool> isTeacher() async {
-    final uid = currentUserId;
-    if (uid == null) return false;
-    final data = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', uid)
-        .maybeSingle();
-    return (data?['role']?.toString() ?? '') == 'teacher';
-  }
+  String _fmt(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 }

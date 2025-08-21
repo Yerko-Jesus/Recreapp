@@ -21,6 +21,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
   String _role = 'student';
+  DateTime? _dob;
+
   bool _loading = false;
   String? _error;
 
@@ -32,8 +34,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  Future<void> _pickDob() async {
+    final now = DateTime.now();
+    // Rango amplio; si quieres restringir edades, podemos ajustarlo luego.
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(now.year - 8, now.month, now.day),
+      firstDate: DateTime(2005, 1, 1),
+      lastDate: now,
+      helpText: 'Selecciona la fecha de nacimiento',
+      builder: (context, child) {
+        // Forzar contraste en tema morado
+        return Theme(
+          data: Theme.of(context).copyWith(
+            dialogBackgroundColor: AppTheme.primaryPurple,
+            colorScheme: Theme.of(context)
+                .colorScheme
+                .copyWith(onSurface: Colors.white, primary: Colors.white),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(foregroundColor: Colors.white),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) setState(() => _dob = picked);
+  }
+
   Future<void> _doRegister() async {
     if (!_form.currentState!.validate()) return;
+    if (_dob == null) {
+      setState(() => _error = 'Selecciona la fecha de nacimiento');
+      return;
+    }
     setState(() {
       _loading = true;
       _error = null;
@@ -45,6 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         password: _passCtrl.text,
         fullName: _nameCtrl.text.trim(),
         role: _role,
+        dateOfBirth: _dob!,
       );
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, CategoriesScreen.routeName);
@@ -59,10 +94,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   InputDecoration _dec(String label) => InputDecoration(labelText: label);
 
+  String _fmtDob(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.primaryPurple, // fondo morado
+      backgroundColor: AppTheme.primaryPurple,
       appBar: AppBar(
         title: const Text('Crear cuenta'),
       ),
@@ -107,6 +145,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 12),
+
+              // Fecha de nacimiento
+              GestureDetector(
+                onTap: _pickDob,
+                child: AbsorbPointer(
+                  child: TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.white,
+                    decoration: _dec('Fecha de nacimiento (YYYY-MM-DD)')
+                        .copyWith(
+                      suffixIcon: const Icon(Icons.calendar_today, color: Colors.white),
+                    ),
+                    validator: (_) => _dob == null
+                        ? 'Selecciona la fecha de nacimiento'
+                        : null,
+                    controller: TextEditingController(
+                      text: _dob == null ? '' : _fmtDob(_dob!),
+                    ),
+                  ),
+                ),
+              ),
+
               const SizedBox(height: 16),
               const Text('Perfil', style: TextStyle(color: Colors.white)),
               Row(
@@ -136,9 +197,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
               const SizedBox(height: 12),
+
               if (_error != null)
                 Text(_error!, style: const TextStyle(color: Colors.orangeAccent)),
               const SizedBox(height: 8),
+
               SizedBox(
                 height: 48,
                 child: ElevatedButton(
@@ -161,10 +224,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   LoginScreen.routeName,
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: Colors.white, // enlace en blanco
+                  foregroundColor: Colors.white,
                 ),
                 child: const Text('Ya tengo cuenta'),
-              )
+              ),
             ],
           ),
         ),
