@@ -2,166 +2,89 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../models/actividad.dart';
-import 'feedback_screen.dart';
+import '../data/actividades_data.dart';
+import 'actividad_screen.dart';
 
 class ActivityScreen extends StatelessWidget {
-  static const String routeName = '/actividad';
+  static const String routeName = '/activities';
 
   const ActivityScreen({super.key});
 
-  List<String> _extraerPasos(String instrucciones) {
-    final raw = instrucciones.trim();
-    if (raw.isEmpty) return const [];
-    // 1) dividir por líneas
-    final porLineas = raw
-        .split(RegExp(r'\r?\n'))
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList();
-    if (porLineas.length > 1) return porLineas;
-    // 2) dividir por viñetas (•, -, –)
-    final porVinetas = raw
-        .split(RegExp(r'(?:^|\n|\r)[\s]*[•\-–]\s+'))
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList();
-    if (porVinetas.length > 1) return porVinetas;
-    return const [];
-  }
-
   @override
   Widget build(BuildContext context) {
-    final act = ModalRoute.of(context)!.settings.arguments as Actividad;
+    // Recibimos la categoría como String desde CategoriesScreen
+    final String categoria =
+    ModalRoute.of(context)!.settings.arguments as String;
 
-    final List<String> pasos = _extraerPasos(act.instrucciones);
+    // Filtramos actividades por categoría
+    final List<Actividad> lista = actividadesData
+        .where((a) => a.categoria == categoria)
+        .toList();
 
     return Scaffold(
       backgroundColor: AppTheme.primaryPurple,
       appBar: AppBar(
         backgroundColor: AppTheme.primaryPurple,
         title: Text(
-          act.titulo,
+          categoria,
           style: const TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Imagen
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                act.imagen,
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Descripción
-            if (act.descripcion.trim().isNotEmpty) ...[
-              const Text(
-                'Descripción',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                act.descripcion,
-                style: const TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ],
-
-            // Materiales
-            if (act.materiales.isNotEmpty) ...[
-              const SizedBox(height: 20),
-              const Text(
-                'Materiales',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 8),
-              for (final m in act.materiales)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text('• $m', style: const TextStyle(color: Colors.white)),
-                ),
-            ],
-
-            // Pasos (derivados de instrucciones) o instrucciones como texto
-            if (pasos.isNotEmpty || act.instrucciones.trim().isNotEmpty) ...[
-              const SizedBox(height: 20),
-              const Text(
-                'Pasos',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 8),
-              if (pasos.isNotEmpty)
-                ...pasos.map(
-                      (p) => Padding(
-                    padding: const EdgeInsets.only(bottom: 6),
-                    child: Text('• $p', style: const TextStyle(color: Colors.white)),
-                  ),
-                ),
-              if (pasos.isEmpty)
-                Text(
-                  act.instrucciones,
-                  style: const TextStyle(color: Colors.white),
-                ),
-            ],
-
-            const SizedBox(height: 100), // espacio para el botón fijo
-          ],
+      body: lista.isEmpty
+          ? const Center(
+        child: Text(
+          'No hay actividades en esta categoría.',
+          style: TextStyle(color: Colors.white),
         ),
-      ),
-
-      // BOTÓN FIJO: "Dar feedback"
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-          child: SizedBox(
-            height: 48,
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              onPressed: () {
+      )
+          : ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: lista.length,
+        itemBuilder: (ctx, i) {
+          final act = lista[i];
+          return Card(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+            margin: const EdgeInsets.only(bottom: 12),
+            child: ListTile(
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  act.imagen,
+                  width: 56,
+                  height: 56,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              title: Text(
+                act.titulo,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              subtitle: Text(
+                act.descripcion,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                // Al detalle le pasamos el objeto Actividad
                 Navigator.pushNamed(
-                  context,
-                  FeedbackScreen.routeName,
-                  arguments: {'actividadTitulo': act.titulo},
+                  ctx,
+                  ActividadScreen.routeName,
+                  arguments: act,
                 );
               },
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.white),
-                foregroundColor: WidgetStateProperty.all(Colors.black),
-                shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-                elevation: WidgetStateProperty.all(2),
-                overlayColor: WidgetStateProperty.all(Colors.black12),
-              ),
-              icon: const Icon(Icons.thumb_up_alt_outlined),
-              label: const Text(
-                'Dar feedback',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

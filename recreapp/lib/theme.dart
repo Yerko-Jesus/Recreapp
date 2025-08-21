@@ -2,39 +2,50 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color primaryPurple = Color(0xFF52006A);
-  static const Color accentRed     = Color(0xFFCD113B);
-  static const Color accentOrange  = Color(0xFFFF7600);
-  static const Color cardBackground= Color(0xFFFFEDE0);
+  static const Color primaryPurple = Color(0xFF6A1B9A);
+  static const Color accentRed = Color(0xFFE53935);
+  static const Color cardBackground = Color(0xFFF6F3FA);
 
-  static final ThemeData lightTheme = ThemeData(
-    primaryColor: primaryPurple,
-    scaffoldBackgroundColor: primaryPurple,
-    fontFamily: 'Montserrat',
-    textTheme: const TextTheme(
-      headlineLarge: TextStyle(
-        fontSize: 32,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primaryPurple,
+        primary: primaryPurple,
+        onPrimary: Colors.white,
       ),
-      titleMedium: TextStyle(
-        fontSize: 18,
-        color: Colors.white70,
-      ),
-      labelLarge: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(48),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: primaryPurple,
+        foregroundColor: Colors.white,
+        centerTitle: true, // <— títulos centrados por defecto
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
         ),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
-    ),
-  );
+      // Texto blanco por defecto (útil sobre fondos morados).
+      textTheme: const TextTheme(
+        bodyLarge: TextStyle(color: Colors.white),
+        bodyMedium: TextStyle(color: Colors.white),
+        bodySmall: TextStyle(color: Colors.white),
+        titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+        titleMedium: TextStyle(color: Colors.white),
+        labelLarge: TextStyle(color: Colors.white),
+      ),
+      // Campos de texto con bordes/etiquetas blancas
+      inputDecorationTheme: const InputDecorationTheme(
+        labelStyle: TextStyle(color: Colors.white),
+        hintStyle: TextStyle(color: Colors.white70),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white70),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        border: OutlineInputBorder(),
+      ),
+    );
+  }
 }
-

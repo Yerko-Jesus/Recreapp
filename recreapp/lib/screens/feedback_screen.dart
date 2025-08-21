@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
 import 'categories_screen.dart';
+import '../services/supabase_service.dart';
 
 class FeedbackScreen extends StatefulWidget {
   static const String routeName = '/feedback';
@@ -25,12 +26,30 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   }
 
   Future<void> _enviar(String valor) async {
-    // Aquí podrías guardar en BD/Firestore si ya lo tienes listo.
+    final liked = valor == 'positive';
+    try {
+      await SupabaseService().saveFeedback(
+        activityTitle: actividadTitulo ?? 'Actividad',
+        category: null, // pásame la categoría si la tienes
+        liked: liked,
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Inicia sesión para enviar feedback. $e'),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
     if (!mounted) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Gracias por tu feedback: ${valor == 'positive' ? 'Me gustó' : 'No me gustó'}'),
+        content:
+        Text('Gracias por tu feedback: ${liked ? 'Me gustó' : 'No me gustó'}'),
         behavior: SnackBarBehavior.floating,
         duration: const Duration(milliseconds: 900),
       ),
@@ -39,20 +58,17 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     await Future.delayed(const Duration(milliseconds: 950));
     if (!mounted) return;
 
-    // Volvemos a categorías y limpiamos el stack hasta allí
-    Navigator.pushNamedAndRemoveUntil(context, CategoriesScreen.routeName, (route) => route.isFirst);
+    Navigator.pushNamedAndRemoveUntil(
+        context, CategoriesScreen.routeName, (route) => route.isFirst);
   }
 
   ButtonStyle _btnStyle() {
-    return ButtonStyle(
-      minimumSize: WidgetStateProperty.all(const Size(double.infinity, 52)),
-      backgroundColor: WidgetStateProperty.all(Colors.white),
-      foregroundColor: WidgetStateProperty.all(Colors.black),
-      shape: WidgetStateProperty.all(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      ),
-      elevation: WidgetStateProperty.all(2),
-      overlayColor: WidgetStateProperty.all(Colors.black12),
+    return ElevatedButton.styleFrom(
+      minimumSize: const Size(double.infinity, 52),
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      elevation: 2,
     );
   }
 
@@ -60,7 +76,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     final titulo = actividadTitulo ?? 'Actividad';
     return Scaffold(
-      backgroundColor: AppTheme.primaryPurple, // fondo morado
+      backgroundColor: AppTheme.primaryPurple,
       appBar: AppBar(
         backgroundColor: AppTheme.primaryPurple,
         title: Text(
@@ -81,8 +97,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-
-            // Me gustó
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -92,10 +106,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 label: const Text('Me gustó'),
               ),
             ),
-
             const SizedBox(height: 12),
-
-            // No me gustó
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(

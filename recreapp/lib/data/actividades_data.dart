@@ -1,130 +1,131 @@
 // lib/data/actividades_data.dart
-
 import '../models/actividad.dart';
 
+/// Cat: Letras, Números, Experimentos, Cocina, Juegos
 final List<Actividad> actividadesData = [
+  // Letras
   Actividad(
-    id: 'leng1',
-    titulo: 'Sopa de Letras',
-    descripcion: 'Encuentra palabras relacionadas con animales.',
-    categoria: 'Lenguaje',
+    id: 'letras-1',
+    categoria: 'Letras',
+    titulo: 'Sopa de letras',
+    descripcion: 'Encuentra palabras ocultas para reforzar vocabulario.',
     imagen: 'assets/images/sopa_letras.png',
-    materiales: ['Hoja impresa', 'Lápiz'],
-    instrucciones:
-    'Entrega la hoja con la cuadrícula. Los niños deben rodear las palabras escondidas.',
+    materiales: ['Lápiz', 'Goma', 'Hoja impresa con sopa de letras'],
+    pasos: '1) Observa la sopa de letras.\n'
+        '2) Busca las palabras de la lista.\n'
+        '3) Rodéalas o subráyalas.\n'
+        '4) Revisa que no falte ninguna.',
   ),
   Actividad(
-    id: 'leng2',
-    titulo: 'Cuentacuentos',
-    descripcion: 'Inventa un cuento en conjunto a partir de tres palabras.',
-    categoria: 'Lenguaje',
+    id: 'letras-2',
+    categoria: 'Letras',
+    titulo: 'Cuenta cuentos',
+    descripcion: 'Lectura guiada para desarrollar la comprensión lectora.',
     imagen: 'assets/images/cuentacuentos.png',
-    materiales: ['Tarjetas con palabras'],
-    instrucciones:
-    'Cada niño saca una tarjeta y aporta una frase para construir un cuento colectivo.',
-  ),
-  Actividad(
-    id: 'leng3',
-    titulo: 'Cuentacuentos',
-    descripcion: 'Inventa un cuento en conjunto a partir de tres palabras.',
-    categoria: 'Lenguaje',
-    imagen: 'assets/images/cuentacuentos.png',
-    materiales: ['Tarjetas con palabras'],
-    instrucciones:
-    'Cada niño saca una tarjeta y aporta una frase para construir un cuento colectivo.',
-  ),
-  Actividad(
-    id: 'leng4',
-    titulo: 'Cuentacuentos',
-    descripcion: 'Inventa un cuento en conjunto a partir de tres palabras.',
-    categoria: 'Lenguaje',
-    imagen: 'assets/images/cuentacuentos.png',
-    materiales: ['Tarjetas con palabras'],
-    instrucciones:
-    'Cada niño saca una tarjeta y aporta una frase para construir un cuento colectivo.',
+    materiales: ['Cuento impreso o digital', 'Marcadores de colores'],
+    pasos: '1) Lee el cuento en voz alta.\n'
+        '2) Subraya palabras nuevas.\n'
+        '3) Comenta qué pasó al inicio, nudo y desenlace.',
   ),
 
+  // Números
   Actividad(
-    id: 'mate1',
-    titulo: 'Bingo de Números',
-    descripcion: 'Juego de bingo para reforzar el reconocimiento de números.',
-    categoria: 'Matemáticas',
+    id: 'numeros-1',
+    categoria: 'Números',
+    titulo: 'Bingo de números',
+    descripcion: 'Reconocimiento de números con una dinámica entretenida.',
     imagen: 'assets/images/bingo_numeros.png',
-    materiales: ['Tablero de bingo', 'Fichas numeradas'],
-    instrucciones:
-    'El facilitador canta números y los niños marcan en su tablero.',
+    materiales: ['Cartillas de bingo', 'Fichas/porotos', 'Bolitas con números'],
+    pasos: '1) Entrega cartillas y fichas.\n'
+        '2) Saca números al azar.\n'
+        '3) Marca coincidencias.\n'
+        '4) ¡Gana quien complete una línea!',
   ),
   Actividad(
-    id: 'mate2',
-    titulo: 'Sumas con Fichas',
-    descripcion: 'Practica sumas usando fichas de colores.',
-    categoria: 'Matemáticas',
+    id: 'numeros-2',
+    categoria: 'Números',
+    titulo: 'Sumas con fichas',
+    descripcion: 'Aprende sumas simples manipulando objetos.',
     imagen: 'assets/images/sumas_fichas.png',
-    materiales: ['Fichas de colores', 'Cartulina'],
-    instrucciones:
-    'Coloca 3 fichas azules y 2 rojas. Pregunta: ¿Cuántas en total?',
+    materiales: ['Fichas o porotos', 'Hoja y lápiz'],
+    pasos: '1) Forma dos grupos de fichas.\n'
+        '2) Cuenta cada grupo.\n'
+        '3) Júntalos y vuelve a contar.\n'
+        '4) Escribe la suma.',
   ),
 
+  // Experimentos
   Actividad(
-    id: 'cien1',
-    titulo: 'Semillas en Vasos',
-    descripcion: 'Planta semillas y observa su crecimiento.',
-    categoria: 'Ciencias',
+    id: 'exp-1',
+    categoria: 'Experimentos',
+    titulo: 'Germinar semillas',
+    descripcion: 'Observa cómo crecen las plantas desde una semilla.',
     imagen: 'assets/images/semillas.png',
-    materiales: ['Vasos plásticos', 'Tierra', 'Semillas'],
-    instrucciones:
-    'Llena el vaso, siembra la semilla y riega. Registra su altura cada día.',
+    materiales: ['Algodón', 'Frasco', 'Semillas', 'Agua'],
+    pasos: '1) Humedece el algodón y ponlo en el frasco.\n'
+        '2) Agrega 2–3 semillas.\n'
+        '3) Deja el frasco con luz indirecta.\n'
+        '4) Observa a diario y agrega agua si hace falta.',
   ),
   Actividad(
-    id: 'cien2',
-    titulo: 'Laberinto de Agua',
-    descripcion: 'Comprende conceptos de flujo de agua.',
-    categoria: 'Ciencias',
+    id: 'exp-2',
+    categoria: 'Experimentos',
+    titulo: 'Laberinto de agua',
+    descripcion: 'Explora la capilaridad del agua con colorantes.',
     imagen: 'assets/images/laberinto_agua.png',
-    materiales: ['Cartón', 'Pajitas', 'Agua'],
-    instrucciones:
-    'Construye un laberinto con pajitas y deja correr el agua por él.',
+    materiales: ['Vasos', 'Papel toalla', 'Colorantes', 'Agua'],
+    pasos: '1) Coloca agua con color en vasos alternados.\n'
+        '2) Conecta los vasos con tiras de papel.\n'
+        '3) Observa cómo el color viaja por el papel.\n'
+        '4) Describe lo ocurrido.',
   ),
 
+  // Cocina
   Actividad(
-    id: 'coci1',
-    titulo: 'Limonada Casera',
-    descripcion: 'Prepara una limonada simple.',
+    id: 'cook-1',
     categoria: 'Cocina',
+    titulo: 'Limonada mágica',
+    descripcion: 'Prepara una limonada refrescante y mide cantidades.',
     imagen: 'assets/images/limonada.png',
-    materiales: ['Limones', 'Agua', 'Azúcar', 'Vaso'],
-    instrucciones:
-    'Exprime 2 limones, mezcla con agua y azúcar al gusto. ¡A disfrutar!',
+    materiales: ['Limones', 'Agua', 'Azúcar', 'Jarra', 'Cucharas medidoras'],
+    pasos: '1) Exprime los limones.\n'
+        '2) Agrega agua y azúcar a gusto.\n'
+        '3) Revuelve y sirve con hielo.',
   ),
   Actividad(
-    id: 'coci2',
-    titulo: 'Batido de Frutas',
-    descripcion: 'Mezcla frutas para un batido nutritivo.',
+    id: 'cook-2',
     categoria: 'Cocina',
+    titulo: 'Batido de frutas',
+    descripcion: 'Licúa frutas para crear un batido nutritivo.',
     imagen: 'assets/images/batido.png',
-    materiales: ['Plátano', 'Leche', 'Frutas'],
-    instrucciones:
-    'Corta la fruta, licúa con leche y sirve.',
+    materiales: ['Frutas', 'Leche o yogurt', 'Licuadora', 'Vaso'],
+    pasos: '1) Lava y corta las frutas.\n'
+        '2) Licúa con leche o yogurt.\n'
+        '3) Sirve y disfruta.',
   ),
 
+  // Juegos
   Actividad(
-    id: 'pasi1',
-    titulo: 'Origami Simple',
-    descripcion: 'Pliega papel para crear figuras.',
-    categoria: 'Pasatiempos',
+    id: 'juegos-1',
+    categoria: 'Juegos',
+    titulo: 'Origami fácil',
+    descripcion: 'Crea figuras de papel siguiendo instrucciones.',
     imagen: 'assets/images/origami.png',
-    materiales: ['Papel cuadrado'],
-    instrucciones:
-    'Sigue los pasos de origami para hacer un barco.',
+    materiales: ['Hojas cuadradas de papel'],
+    pasos: '1) Dobla el papel siguiendo el diagrama.\n'
+        '2) Marca bien los pliegues.\n'
+        '3) Decora la figura al final.',
   ),
   Actividad(
-    id: 'pasi2',
-    titulo: 'Pintura Libre',
-    descripcion: 'Deja fluir tu creatividad con pintura.',
-    categoria: 'Pasatiempos',
+    id: 'juegos-2',
+    categoria: 'Juegos',
+    titulo: 'Pintura con esponjas',
+    descripcion: 'Pinta con texturas usando esponjas.',
     imagen: 'assets/images/pintura.png',
-    materiales: ['Pinturas', 'Pinceles', 'Papel'],
-    instrucciones:
-    'Pinta lo que imagines. No hay límites.',
+    materiales: ['Pinturas', 'Esponjas', 'Cartulina', 'Delantal'],
+    pasos: '1) Prepara el espacio y protege la mesa.\n'
+        '2) Moja la esponja en pintura.\n'
+        '3) Presiona suavemente sobre la cartulina.\n'
+        '4) Deja secar.',
   ),
 ];
