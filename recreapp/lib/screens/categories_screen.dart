@@ -1,9 +1,7 @@
 // lib/screens/categories_screen.dart
 import 'package:flutter/material.dart';
 import '../theme.dart';
-import 'activity_screen.dart';
-// si la estructura de carpetas lo requiere:
-// import '../screens/activity_screen.dart';
+import 'categoria_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   static const String routeName = '/categories';
@@ -35,17 +33,17 @@ class CategoriesScreen extends StatelessWidget {
             _buildCategoryCard(
               context,
               icon: 'assets/images/lenguaje.png',
-              label: 'Lenguaje',
+              label: 'Letras',
             ),
             _buildCategoryCard(
               context,
               icon: 'assets/images/matematicas.png',
-              label: 'Matemáticas',
+              label: 'Números',
             ),
             _buildCategoryCard(
               context,
               icon: 'assets/images/ciencias.png',
-              label: 'Ciencias',
+              label: 'Experimentos',
             ),
             _buildCategoryCard(
               context,
@@ -55,7 +53,7 @@ class CategoriesScreen extends StatelessWidget {
             _buildCategoryCard(
               context,
               icon: 'assets/images/pasatiempos.png',
-              label: 'Pasatiempos',
+              label: 'Juegos',
             ),
           ],
         ),
@@ -63,13 +61,17 @@ class CategoriesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryCard(BuildContext ctx,
-      {required String icon, required String label}) {
+  Widget _buildCategoryCard(
+      BuildContext ctx, {
+        required String icon,
+        required String label,
+      }) {
     return InkWell(
       onTap: () {
+        // Ahora vamos a la pantalla que LISTA las actividades de esa categoría
         Navigator.pushNamed(
           ctx,
-          ActivityScreen.routeName,
+          CategoriaScreen.routeName,
           arguments: label,
         );
       },
@@ -87,9 +89,11 @@ class CategoriesScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               label,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
@@ -98,4 +102,3 @@ class CategoriesScreen extends StatelessWidget {
     );
   }
 }
-
