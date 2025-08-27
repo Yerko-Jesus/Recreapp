@@ -39,6 +39,18 @@ flutter:
     # NUEVAS imágenes para Manualidades
     - assets/images/macetero.png
     - assets/images/cuaderno_viaje.png
+    # NUEVAS imágenes para Experimentos
+    - assets/images/experimento_volcan.png
+    - assets/images/flipbook.png
+    # NUEVAS imágenes para Letras
+    - assets/images/adivinanzas_chiloe.png
+    - assets/images/rapanui_contar.png
+    # NUEVAS imágenes para Numeros
+    - assets/images/puzzle_numeros.png
+    - assets/images/bowling_tubos.png
+    # NUEVAS imágenes para Cocina
+    - assets/images/panqueques.png
+    - assets/images/queque_yogur.png
 
   fonts:
     - family: Montserrat
