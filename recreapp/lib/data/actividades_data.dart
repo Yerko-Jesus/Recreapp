@@ -1,131 +1,60 @@
 // lib/data/actividades_data.dart
 import '../models/actividad.dart';
 
-/// Cat: Letras, Números, Experimentos, Cocina, Juegos
+/// Lista de actividades actuales.
+/// Categorías definidas en la app: Letras, Números, Experimentos, Cocina, Manualidades
+/// En este momento solo cargamos actividades para "Manualidades".
 final List<Actividad> actividadesData = [
-  // Letras
+  // ====== MANUALIDADES ======
   Actividad(
-    id: 'letras-1',
-    categoria: 'Letras',
-    titulo: 'Sopa de letras',
-    descripcion: 'Encuentra palabras ocultas para reforzar vocabulario.',
-    imagen: 'assets/images/sopa_letras.png',
-    materiales: ['Lápiz', 'Goma', 'Hoja impresa con sopa de letras'],
-    pasos: '1) Observa la sopa de letras.\n'
-        '2) Busca las palabras de la lista.\n'
-        '3) Rodéalas o subráyalas.\n'
-        '4) Revisa que no falte ninguna.',
-  ),
-  Actividad(
-    id: 'letras-2',
-    categoria: 'Letras',
-    titulo: 'Cuenta cuentos',
-    descripcion: 'Lectura guiada para desarrollar la comprensión lectora.',
-    imagen: 'assets/images/cuentacuentos.png',
-    materiales: ['Cuento impreso o digital', 'Marcadores de colores'],
-    pasos: '1) Lee el cuento en voz alta.\n'
-        '2) Subraya palabras nuevas.\n'
-        '3) Comenta qué pasó al inicio, nudo y desenlace.',
-  ),
-
-  // Números
-  Actividad(
-    id: 'numeros-1',
-    categoria: 'Números',
-    titulo: 'Bingo de números',
-    descripcion: 'Reconocimiento de números con una dinámica entretenida.',
-    imagen: 'assets/images/bingo_numeros.png',
-    materiales: ['Cartillas de bingo', 'Fichas/porotos', 'Bolitas con números'],
-    pasos: '1) Entrega cartillas y fichas.\n'
-        '2) Saca números al azar.\n'
-        '3) Marca coincidencias.\n'
-        '4) ¡Gana quien complete una línea!',
-  ),
-  Actividad(
-    id: 'numeros-2',
-    categoria: 'Números',
-    titulo: 'Sumas con fichas',
-    descripcion: 'Aprende sumas simples manipulando objetos.',
-    imagen: 'assets/images/sumas_fichas.png',
-    materiales: ['Fichas o porotos', 'Hoja y lápiz'],
-    pasos: '1) Forma dos grupos de fichas.\n'
-        '2) Cuenta cada grupo.\n'
-        '3) Júntalos y vuelve a contar.\n'
-        '4) Escribe la suma.',
+    id: 'manualidades_maceteros_botella',
+    categoria: 'Manualidades',
+    titulo: 'Maceteros para Niños',
+    descripcion:
+    'Aprende a reutilizar botellas de plástico para crear maceteros y plantar flores, verduras o la planta que prefieras.',
+    imagen: 'assets/images/macetero.png', // nueva imagen específica
+    materiales: [
+      'Botella plástica',
+      'Tijeras',
+      'Marcador',
+      'Pinceles',
+      'Pintura',
+      'Tierra',
+      'Semillas o planta'
+    ],
+    pasos:
+    '1) Dibuja la figura que quieras en el centro de la botella (sugerencia: un búho).\n'
+        '2) Con las tijeras, recorta la figura. Deja la parte de atrás recta y, por el frente, recorta las orejas del búho. Recuerda que la base de la botella será también la base del macetero.\n'
+        '3) Elige un color base y pinta toda la botella por el interior. Luego, por el exterior, pinta los detalles del búho.\n'
+        '4) Agrega la tierra y planta semillas o una de tus plantas favoritas.',
   ),
 
-  // Experimentos
   Actividad(
-    id: 'exp-1',
-    categoria: 'Experimentos',
-    titulo: 'Germinar semillas',
-    descripcion: 'Observa cómo crecen las plantas desde una semilla.',
-    imagen: 'assets/images/semillas.png',
-    materiales: ['Algodón', 'Frasco', 'Semillas', 'Agua'],
-    pasos: '1) Humedece el algodón y ponlo en el frasco.\n'
-        '2) Agrega 2–3 semillas.\n'
-        '3) Deja el frasco con luz indirecta.\n'
-        '4) Observa a diario y agrega agua si hace falta.',
-  ),
-  Actividad(
-    id: 'exp-2',
-    categoria: 'Experimentos',
-    titulo: 'Laberinto de agua',
-    descripcion: 'Explora la capilaridad del agua con colorantes.',
-    imagen: 'assets/images/laberinto_agua.png',
-    materiales: ['Vasos', 'Papel toalla', 'Colorantes', 'Agua'],
-    pasos: '1) Coloca agua con color en vasos alternados.\n'
-        '2) Conecta los vasos con tiras de papel.\n'
-        '3) Observa cómo el color viaja por el papel.\n'
-        '4) Describe lo ocurrido.',
-  ),
-
-  // Cocina
-  Actividad(
-    id: 'cook-1',
-    categoria: 'Cocina',
-    titulo: 'Limonada mágica',
-    descripcion: 'Prepara una limonada refrescante y mide cantidades.',
-    imagen: 'assets/images/limonada.png',
-    materiales: ['Limones', 'Agua', 'Azúcar', 'Jarra', 'Cucharas medidoras'],
-    pasos: '1) Exprime los limones.\n'
-        '2) Agrega agua y azúcar a gusto.\n'
-        '3) Revuelve y sirve con hielo.',
-  ),
-  Actividad(
-    id: 'cook-2',
-    categoria: 'Cocina',
-    titulo: 'Batido de frutas',
-    descripcion: 'Licúa frutas para crear un batido nutritivo.',
-    imagen: 'assets/images/batido.png',
-    materiales: ['Frutas', 'Leche o yogurt', 'Licuadora', 'Vaso'],
-    pasos: '1) Lava y corta las frutas.\n'
-        '2) Licúa con leche o yogurt.\n'
-        '3) Sirve y disfruta.',
-  ),
-
-  // Juegos
-  Actividad(
-    id: 'juegos-1',
-    categoria: 'Juegos',
-    titulo: 'Origami fácil',
-    descripcion: 'Crea figuras de papel siguiendo instrucciones.',
-    imagen: 'assets/images/origami.png',
-    materiales: ['Hojas cuadradas de papel'],
-    pasos: '1) Dobla el papel siguiendo el diagrama.\n'
-        '2) Marca bien los pliegues.\n'
-        '3) Decora la figura al final.',
-  ),
-  Actividad(
-    id: 'juegos-2',
-    categoria: 'Juegos',
-    titulo: 'Pintura con esponjas',
-    descripcion: 'Pinta con texturas usando esponjas.',
-    imagen: 'assets/images/pintura.png',
-    materiales: ['Pinturas', 'Esponjas', 'Cartulina', 'Delantal'],
-    pasos: '1) Prepara el espacio y protege la mesa.\n'
-        '2) Moja la esponja en pintura.\n'
-        '3) Presiona suavemente sobre la cartulina.\n'
-        '4) Deja secar.',
+    id: 'manualidades_cuaderno_viaje',
+    categoria: 'Manualidades',
+    titulo: 'Un cuaderno de viaje',
+    descripcion:
+    'Prepara y usa un cuaderno para registrar recuerdos antes, durante y después de un viaje.',
+    imagen: 'assets/images/cuaderno_viaje.png', // nueva imagen específica
+    materiales: [
+      'Cuaderno o libreta',
+      'Sobre de papel',
+      'Pegamento',
+      'Lápices o marcadores',
+      'Fotos o recortes (opcional)'
+    ],
+    pasos:
+    'Instrucciones antes del viaje:\n'
+        '1) Destina un cuaderno solo para anotar los recuerdos de ese viaje en particular. Escribe en la portada el nombre del lugar y la fecha.\n'
+        '2) Al final del cuaderno, pega un sobre de recuerdos para guardar mapas, flores, servilletas y todo lo que recojas durante el viaje.\n'
+        '\n'
+        'Instrucciones durante el viaje:\n'
+        '1) Cada día, dedica unos minutos a escribir lo más importante o lo que quieras recordar.\n'
+        '2) Para hacerlo más entretenido, incluye dibujos, fotografías y diálogos con personas del lugar u otros viajeros.\n'
+        '3) Usa todos los sentidos en tu relato: describe lo que ves, hueles, comes y oyes.\n'
+        '\n'
+        'Instrucciones después del viaje:\n'
+        '1) Al volver, comparte tu cuaderno con familia y amigos para revivir el viaje.\n'
+        '2) Guarda el cuaderno en un lugar especial. Cuando lo leas en unos años, será como viajar en tu memoria.',
   ),
 ];

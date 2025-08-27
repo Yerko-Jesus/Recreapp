@@ -36,10 +36,13 @@ flutter:
     - assets/images/origami.png
     - assets/images/pintura.png
     - assets/images/illustracion_bienvenida.png
+    # NUEVAS imágenes para Manualidades
+    - assets/images/macetero.png
+    - assets/images/cuaderno_viaje.png
 
-fonts:
-  - family: Montserrat
-    fonts:
-      - asset: assets/fonts/Montserrat-Regular.ttf
-      - asset: assets/fonts/Montserrat-Bold.ttf
-        weight: 700
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 700

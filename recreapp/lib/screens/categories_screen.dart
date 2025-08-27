@@ -1,83 +1,44 @@
-// lib/screens/categories_screen.dart
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../theme.dart';
-import 'activity_screen.dart';
-import 'welcome_screen.dart';
+import 'category_list_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   static const String routeName = '/categories';
-
   const CategoriesScreen({super.key});
-
-  Future<void> _logout(BuildContext context) async {
-    await Supabase.instance.client.auth.signOut();
-    if (context.mounted) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        WelcomeScreen.routeName,
-            (route) => route.isFirst,
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    final cats = [
+      ('assets/images/lenguaje.png', 'Letras'),
+      ('assets/images/matematicas.png', 'Números'),
+      ('assets/images/ciencias.png', 'Experimentos'),
+      ('assets/images/cocina.png', 'Cocina'),
+      ('assets/images/pasatiempos.png', 'Manualidades'),
+    ];
+
     return Scaffold(
       backgroundColor: AppTheme.primaryPurple,
       appBar: AppBar(
         backgroundColor: AppTheme.primaryPurple,
         title: const Text(
           'Categorías',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            tooltip: 'Cerrar sesión',
-            onPressed: () => _logout(context),
-            icon: const Icon(Icons.logout),
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: GridView.count(
-          crossAxisCount: 2,
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          children: [
-            _buildCategoryCard(
-              context,
-              icon: 'assets/images/lenguaje.png',
-              label: 'Letras',
-            ),
-            _buildCategoryCard(
-              context,
-              icon: 'assets/images/matematicas.png',
-              label: 'Números',
-            ),
-            _buildCategoryCard(
-              context,
-              icon: 'assets/images/ciencias.png',
-              label: 'Experimentos',
-            ),
-            _buildCategoryCard(
-              context,
-              icon: 'assets/images/cocina.png',
-              label: 'Cocina',
-            ),
-            _buildCategoryCard(
-              context,
-              icon: 'assets/images/pasatiempos.png',
-              label: 'Juegos',
-            ),
-          ],
+        child: GridView.builder(
+          itemCount: cats.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+          ),
+          itemBuilder: (ctx, i) {
+            final (icon, label) = cats[i];
+            return _buildCategoryCard(ctx, icon: icon, label: label);
+          },
         ),
       ),
     );
@@ -89,14 +50,14 @@ class CategoriesScreen extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           ctx,
-          ActivityScreen.routeName,
-          arguments: label,
+          CategoryListScreen.routeName,
+          arguments: label, // pasamos el nombre de la categoría
         );
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white, // tarjeta clara para buen contraste
+          color: AppTheme.cardBackground,
           borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.all(12),
@@ -109,7 +70,7 @@ class CategoriesScreen extends StatelessWidget {
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.black, // texto negro sobre tarjeta blanca
+                color: Colors.black, // el card es claro; si prefieres blanco, cámbialo
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
