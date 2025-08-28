@@ -1,6 +1,7 @@
+// lib/screens/categories_screen.dart
 import 'package:flutter/material.dart';
 import '../theme.dart';
-import 'category_list_screen.dart';
+import 'activity_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   static const String routeName = '/categories';
@@ -8,16 +9,16 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cats = [
-      ('assets/images/lenguaje.png', 'Letras'),
-      ('assets/images/matematicas.png', 'Números'),
-      ('assets/images/ciencias.png', 'Experimentos'),
-      ('assets/images/cocina.png', 'Cocina'),
-      ('assets/images/pasatiempos.png', 'Manualidades'),
+    final categorias = <_Cat>[
+      _Cat('Letras', 'assets/images/lenguaje.png'),
+      _Cat('Números', 'assets/images/matematicas.png'),
+      _Cat('Experimentos', 'assets/images/ciencias.png'),
+      _Cat('Cocina', 'assets/images/cocina.png'),
+      _Cat('Manualidades', 'assets/images/pasatiempos.png'),
     ];
 
     return Scaffold(
-      backgroundColor: AppTheme.primaryPurple,
+      backgroundColor: AppTheme.primaryPurple, // 🎨 Fondo morado
       appBar: AppBar(
         backgroundColor: AppTheme.primaryPurple,
         title: const Text(
@@ -26,38 +27,46 @@ class CategoriesScreen extends StatelessWidget {
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: GridView.builder(
-          itemCount: cats.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      body: Container(
+        color: AppTheme.primaryPurple, // asegura morado detrás del Grid
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: GridView.count(
             crossAxisCount: 2,
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
+            children: categorias
+                .map(
+                  (c) => _buildCategoryCard(
+                context,
+                icon: c.icon,
+                label: c.nombre,
+              ),
+            )
+                .toList(),
           ),
-          itemBuilder: (ctx, i) {
-            final (icon, label) = cats[i];
-            return _buildCategoryCard(ctx, icon: icon, label: label);
-          },
         ),
       ),
     );
   }
 
-  Widget _buildCategoryCard(BuildContext ctx,
-      {required String icon, required String label}) {
+  Widget _buildCategoryCard(
+      BuildContext ctx, {
+        required String icon,
+        required String label,
+      }) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           ctx,
-          CategoryListScreen.routeName,
-          arguments: label, // pasamos el nombre de la categoría
+          ActivityScreen.routeName,
+          arguments: label,
         );
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(
         decoration: BoxDecoration(
-          color: AppTheme.cardBackground,
+          color: AppTheme.cardBackground, // tarjetas claras sobre morado
           borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.all(12),
@@ -70,7 +79,7 @@ class CategoriesScreen extends StatelessWidget {
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.black, // el card es claro; si prefieres blanco, cámbialo
+                color: Colors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -80,4 +89,10 @@ class CategoriesScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class _Cat {
+  final String nombre;
+  final String icon;
+  _Cat(this.nombre, this.icon);
 }

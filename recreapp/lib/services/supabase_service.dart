@@ -14,7 +14,7 @@ class SupabaseService {
       throw Exception('No hay sesión iniciada');
     }
 
-    await supabase.from('feedbacks').insert({
+    await supabase.from('feedback').insert({
       'user_id': userId,
       'activity_title': activityTitle,
       'category': category,

@@ -1,120 +1,109 @@
-// lib/screens/feedback_screen.dart
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../models/actividad.dart';
 import '../theme.dart';
-import 'categories_screen.dart';
-import '../services/supabase_service.dart';
 
 class FeedbackScreen extends StatefulWidget {
   static const String routeName = '/feedback';
-
-  const FeedbackScreen({super.key});
+  final Actividad actividad;
+  const FeedbackScreen({super.key, required this.actividad});
 
   @override
   State<FeedbackScreen> createState() => _FeedbackScreenState();
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
-  String? actividadTitulo;
+  bool _sending = false;
+  String? _error;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final args = ModalRoute.of(context)!.settings.arguments;
-    if (args is Map) {
-      actividadTitulo = args['actividadTitulo']?.toString();
-    }
-  }
-
-  Future<void> _enviar(String valor) async {
-    final liked = valor == 'positive';
-    try {
-      await SupabaseService().saveFeedback(
-        activityTitle: actividadTitulo ?? 'Actividad',
-        category: null, // pásame la categoría si la tienes
-        liked: liked,
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Inicia sesión para enviar feedback. $e'),
-          behavior: SnackBarBehavior.floating,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+  Future<void> _send(String rating) async {
+    final user = Supabase.instance.client.auth.currentUser;
+    if (user == null) {
+      setState(() => _error = 'Debes iniciar sesión.');
       return;
     }
+    setState(() {
+      _sending = true;
+      _error = null;
+    });
+    try {
+      await Supabase.instance.client.from('feedback').insert({
+        'user_id': user.id,
+        'activity_id': widget.actividad.id,        // ← nombres en INGLÉS
+        'activity_title': widget.actividad.titulo, // ← nombres en INGLÉS
+        'rating': rating,
+      });
 
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content:
-        Text('Gracias por tu feedback: ${liked ? 'Me gustó' : 'No me gustó'}'),
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(milliseconds: 900),
-      ),
-    );
-
-    await Future.delayed(const Duration(milliseconds: 950));
-    if (!mounted) return;
-
-    Navigator.pushNamedAndRemoveUntil(
-        context, CategoriesScreen.routeName, (route) => route.isFirst);
-  }
-
-  ButtonStyle _btnStyle() {
-    return ElevatedButton.styleFrom(
-      minimumSize: const Size(double.infinity, 52),
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      elevation: 2,
-    );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('¡Gracias por tu opinión!'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      Navigator.of(context).pop();
+    } catch (e) {
+      setState(() => _error = 'Error al guardar: $e');
+    } finally {
+      setState(() => _sending = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final titulo = actividadTitulo ?? 'Actividad';
     return Scaffold(
       backgroundColor: AppTheme.primaryPurple,
       appBar: AppBar(
         backgroundColor: AppTheme.primaryPurple,
-        title: Text(
-          'Feedback — $titulo',
-          style: const TextStyle(color: Colors.white),
-        ),
+        title: const Text('Feedback', style: TextStyle(color: Colors.white)),
         iconTheme: const IconThemeData(color: Colors.white),
-        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 8),
-            const Text(
-              '¿Te gustó esta actividad?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: () => _enviar('positive'),
-                style: _btnStyle(),
-                icon: const Icon(Icons.thumb_up_alt_outlined),
-                label: const Text('Me gustó'),
+            Text(
+              widget.actividad.titulo,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: () => _enviar('negative'),
-                style: _btnStyle(),
-                icon: const Icon(Icons.thumb_down_alt_outlined),
-                label: const Text('No me gustó'),
-              ),
+            if (_error != null)
+              Text(_error!, style: const TextStyle(color: Colors.white)),
+            const Spacer(),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: _sending ? null : () => _send('positive'),
+                    icon: const Icon(Icons.thumb_up),
+                    label: const Text('Me gustó'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      minimumSize: const Size.fromHeight(48),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: _sending ? null : () => _send('negative'),
+                    icon: const Icon(Icons.thumb_down),
+                    label: const Text('No me gustó'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      minimumSize: const Size.fromHeight(48),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
