@@ -227,7 +227,7 @@ Respuestas: 1) El sol  2) La luna  3) El pastor se llama “Mañana”.
 1- Dibuja en la botella la figura que quieras (p. ej., un búho).
 2- Recorta la figura; deja la parte trasera recta y en el frente forma las “orejas”.
 3- Pinta por dentro (color base) y por fuera (detalles). Deja secar.
-4- Agrega tierra y planta semillas o un esqueje.
+4- Agrega tierra y planta semillas o un esqueje (Importante, haz un pequeño hoyo en la tierra para dejar la semilla).
 ''',
   ),
 

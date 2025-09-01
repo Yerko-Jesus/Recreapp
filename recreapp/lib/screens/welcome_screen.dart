@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
 import 'login_screen.dart';
-import 'categories_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -69,7 +68,7 @@ class WelcomeScreen extends StatelessWidget {
                   if (current == null) {
                     Navigator.pushNamed(context, LoginScreen.routeName);
                   } else {
-                    Navigator.pushNamed(context, CategoriesScreen.routeName);
+                    Navigator.pushNamed(context, LoginScreen.routeName);
                   }
                 },
                 style: ElevatedButton.styleFrom(
