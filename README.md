@@ -263,5 +263,8 @@ class SupabaseKeys {
 
 
 ## Licencia
-   **Este proyecto está bajo la Licencia MIT**
+   Este repositorio es **privado**. El código y los recursos de **RecreApp** están protegidos por una **licencia propietaria**.  
+   No se permite su uso, copia, modificación, publicación ni distribución sin autorización previa y por escrito del titular.
+   
+   Para permisos o dudas, escribe a **yerkojesus@outlook.com**.
 
